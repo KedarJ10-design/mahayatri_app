@@ -3,7 +3,14 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'route_names.dart';
 
-// Placeholder screens — will be replaced with real screens as we build features
+// Auth screens
+import '../../features/auth/ui/screens/splash_screen.dart';
+import '../../features/auth/ui/screens/onboarding_screen.dart';
+import '../../features/auth/ui/screens/login_screen.dart';
+import '../../features/auth/ui/screens/signup_screen.dart';
+import '../../features/auth/ui/screens/forgot_password_screen.dart';
+
+// Placeholder for screens not yet built
 class _PlaceholderScreen extends StatelessWidget {
   final String title;
   const _PlaceholderScreen({required this.title});
@@ -13,19 +20,37 @@ class _PlaceholderScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text(title)),
       body: Center(
-        child: Text(
-          title,
-          style: Theme.of(context).textTheme.headlineMedium,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.construction_rounded,
+              size: 64,
+              color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.5),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              title,
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Coming soon',
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: Colors.grey,
+                  ),
+            ),
+          ],
         ),
       ),
     );
   }
 }
 
-/// Main router configuration using GoRouter with declarative routing.
+/// Main router configuration using GoRouter.
 ///
-/// Route guards (auth, role-based) are handled via redirect callbacks.
-/// Shell routes provide persistent bottom navigation.
+/// Auth screens are standalone routes (no bottom nav).
+/// Main app screens use ShellRoute for persistent bottom navigation.
 final appRouterProvider = Provider<GoRouter>((ref) {
   return GoRouter(
     initialLocation: RouteNames.splash,
@@ -35,32 +60,27 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: RouteNames.splash,
         name: 'splash',
-        builder: (context, state) =>
-            const _PlaceholderScreen(title: 'Splash'),
+        builder: (context, state) => const SplashScreen(),
       ),
       GoRoute(
         path: RouteNames.onboarding,
         name: 'onboarding',
-        builder: (context, state) =>
-            const _PlaceholderScreen(title: 'Onboarding'),
+        builder: (context, state) => const OnboardingScreen(),
       ),
       GoRoute(
         path: RouteNames.login,
         name: 'login',
-        builder: (context, state) =>
-            const _PlaceholderScreen(title: 'Login'),
+        builder: (context, state) => const LoginScreen(),
       ),
       GoRoute(
         path: RouteNames.signup,
         name: 'signup',
-        builder: (context, state) =>
-            const _PlaceholderScreen(title: 'Sign Up'),
+        builder: (context, state) => const SignupScreen(),
       ),
       GoRoute(
         path: RouteNames.forgotPassword,
         name: 'forgotPassword',
-        builder: (context, state) =>
-            const _PlaceholderScreen(title: 'Forgot Password'),
+        builder: (context, state) => const ForgotPasswordScreen(),
       ),
       GoRoute(
         path: RouteNames.otpVerify,
@@ -75,35 +95,30 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           return _MainShell(child: child);
         },
         routes: [
-          // Tab 1: Home
           GoRoute(
             path: RouteNames.home,
             name: 'home',
             builder: (context, state) =>
                 const _PlaceholderScreen(title: 'Home'),
           ),
-          // Tab 2: Explore
           GoRoute(
             path: RouteNames.explore,
             name: 'explore',
             builder: (context, state) =>
                 const _PlaceholderScreen(title: 'Explore'),
           ),
-          // Tab 3: AI Planner
           GoRoute(
             path: RouteNames.planner,
             name: 'planner',
             builder: (context, state) =>
                 const _PlaceholderScreen(title: 'AI Planner'),
           ),
-          // Tab 4: Bookings
           GoRoute(
             path: RouteNames.bookings,
             name: 'bookings',
             builder: (context, state) =>
                 const _PlaceholderScreen(title: 'Bookings'),
           ),
-          // Tab 5: Profile
           GoRoute(
             path: RouteNames.profile,
             name: 'profile',
@@ -129,13 +144,6 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         ),
       ),
       GoRoute(
-        path: '${RouteNames.vendorDetail}/:id',
-        name: 'vendorDetail',
-        builder: (context, state) => _PlaceholderScreen(
-          title: 'Vendor: ${state.pathParameters['id']}',
-        ),
-      ),
-      GoRoute(
         path: '${RouteNames.bookingDetail}/:id',
         name: 'bookingDetail',
         builder: (context, state) => _PlaceholderScreen(
@@ -147,13 +155,6 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         name: 'chatList',
         builder: (context, state) =>
             const _PlaceholderScreen(title: 'Chat'),
-      ),
-      GoRoute(
-        path: '${RouteNames.chatConversation}/:id',
-        name: 'chatConversation',
-        builder: (context, state) => _PlaceholderScreen(
-          title: 'Chat: ${state.pathParameters['id']}',
-        ),
       ),
       GoRoute(
         path: RouteNames.notifications,
@@ -187,8 +188,6 @@ final appRouterProvider = Provider<GoRouter>((ref) {
               'Page not found',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
-            const SizedBox(height: 8),
-            Text(state.error.toString()),
             const SizedBox(height: 24),
             ElevatedButton(
               onPressed: () => context.go(RouteNames.home),
@@ -202,8 +201,6 @@ final appRouterProvider = Provider<GoRouter>((ref) {
 });
 
 /// Main shell widget providing persistent bottom navigation bar.
-///
-/// This wraps the 5 main tabs: Home, Explore, AI Planner, Bookings, Profile.
 class _MainShell extends StatelessWidget {
   final Widget child;
   const _MainShell({required this.child});
