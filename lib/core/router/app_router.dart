@@ -10,6 +10,10 @@ import '../../features/auth/ui/screens/login_screen.dart';
 import '../../features/auth/ui/screens/signup_screen.dart';
 import '../../features/auth/ui/screens/forgot_password_screen.dart';
 
+// Feature screens
+import '../../features/home/ui/screens/home_screen.dart';
+import '../../features/explore/ui/screens/explore_screen.dart';
+
 // Placeholder for screens not yet built
 class _PlaceholderScreen extends StatelessWidget {
   final String title;
@@ -98,14 +102,12 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           GoRoute(
             path: RouteNames.home,
             name: 'home',
-            builder: (context, state) =>
-                const _PlaceholderScreen(title: 'Home'),
+            builder: (context, state) => const HomeScreen(),
           ),
           GoRoute(
             path: RouteNames.explore,
             name: 'explore',
-            builder: (context, state) =>
-                const _PlaceholderScreen(title: 'Explore'),
+            builder: (context, state) => const ExploreScreen(),
           ),
           GoRoute(
             path: RouteNames.planner,
