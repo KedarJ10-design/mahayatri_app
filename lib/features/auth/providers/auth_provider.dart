@@ -162,6 +162,11 @@ class AuthNotifier extends StateNotifier<AppAuthState> {
     }
   }
 
+  /// Re-fetch the profile from the database and update state.
+  Future<void> refreshProfile() async {
+    await _loadProfile();
+  }
+
   /// Maps raw Supabase auth error messages to user-friendly strings.
   String _mapAuthError(String message) {
     final msg = message.toLowerCase();

@@ -13,6 +13,10 @@ import '../../features/auth/ui/screens/forgot_password_screen.dart';
 // Feature screens
 import '../../features/home/ui/screens/home_screen.dart';
 import '../../features/explore/ui/screens/explore_screen.dart';
+import '../../features/planner/ui/screens/planner_screen.dart';
+import '../../features/booking/ui/screens/bookings_screen.dart';
+import '../../features/profile/ui/screens/profile_screen.dart';
+import '../../features/profile/ui/screens/edit_profile_screen.dart';
 
 // Placeholder for screens not yet built
 class _PlaceholderScreen extends StatelessWidget {
@@ -112,20 +116,17 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           GoRoute(
             path: RouteNames.planner,
             name: 'planner',
-            builder: (context, state) =>
-                const _PlaceholderScreen(title: 'AI Planner'),
+            builder: (context, state) => const PlannerScreen(),
           ),
           GoRoute(
             path: RouteNames.bookings,
             name: 'bookings',
-            builder: (context, state) =>
-                const _PlaceholderScreen(title: 'Bookings'),
+            builder: (context, state) => const BookingsScreen(),
           ),
           GoRoute(
             path: RouteNames.profile,
             name: 'profile',
-            builder: (context, state) =>
-                const _PlaceholderScreen(title: 'Profile'),
+            builder: (context, state) => const ProfileScreen(),
           ),
         ],
       ),
@@ -175,6 +176,11 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         name: 'safety',
         builder: (context, state) =>
             const _PlaceholderScreen(title: 'Safety Center'),
+      ),
+      GoRoute(
+        path: RouteNames.editProfile,
+        name: 'editProfile',
+        builder: (context, state) => const EditProfileScreen(),
       ),
     ],
 
