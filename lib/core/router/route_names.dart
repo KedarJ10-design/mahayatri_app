@@ -19,10 +19,15 @@ abstract final class RouteNames {
   static const String profile = '/profile';
 
   // ── Detail Screens ──
+  static const String destinationDetail = '/destination';
   static const String guideDetail = '/guide';
   static const String stayDetail = '/stay';
   static const String vendorDetail = '/vendor';
   static const String bookingDetail = '/booking';
+
+  // ── Booking Flow ──
+  static const String bookStay = '/book-stay';
+  static const String bookGuide = '/book-guide';
 
   // ── Chat ──
   static const String chat = '/chat';

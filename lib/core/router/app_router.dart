@@ -13,8 +13,12 @@ import '../../features/auth/ui/screens/forgot_password_screen.dart';
 // Feature screens
 import '../../features/home/ui/screens/home_screen.dart';
 import '../../features/explore/ui/screens/explore_screen.dart';
+import '../../features/explore/ui/screens/destination_detail_screen.dart';
+import '../../features/explore/ui/screens/guide_detail_screen.dart';
+import '../../features/explore/ui/screens/stay_detail_screen.dart';
 import '../../features/planner/ui/screens/planner_screen.dart';
 import '../../features/booking/ui/screens/bookings_screen.dart';
+import '../../features/booking/ui/screens/create_booking_screen.dart';
 import '../../features/profile/ui/screens/profile_screen.dart';
 import '../../features/profile/ui/screens/edit_profile_screen.dart';
 
@@ -133,17 +137,24 @@ final appRouterProvider = Provider<GoRouter>((ref) {
 
       // ── Detail Screens (no bottom nav) ──
       GoRoute(
+        path: '${RouteNames.destinationDetail}/:id',
+        name: 'destinationDetail',
+        builder: (context, state) => DestinationDetailScreen(
+          id: state.pathParameters['id']!,
+        ),
+      ),
+      GoRoute(
         path: '${RouteNames.guideDetail}/:id',
         name: 'guideDetail',
-        builder: (context, state) => _PlaceholderScreen(
-          title: 'Guide: ${state.pathParameters['id']}',
+        builder: (context, state) => GuideDetailScreen(
+          id: state.pathParameters['id']!,
         ),
       ),
       GoRoute(
         path: '${RouteNames.stayDetail}/:id',
         name: 'stayDetail',
-        builder: (context, state) => _PlaceholderScreen(
-          title: 'Stay: ${state.pathParameters['id']}',
+        builder: (context, state) => StayDetailScreen(
+          id: state.pathParameters['id']!,
         ),
       ),
       GoRoute(
@@ -152,6 +163,36 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         builder: (context, state) => _PlaceholderScreen(
           title: 'Booking: ${state.pathParameters['id']}',
         ),
+      ),
+
+      // ── Booking Flow ──
+      GoRoute(
+        path: '${RouteNames.bookStay}/:id',
+        name: 'bookStay',
+        builder: (context, state) {
+          final extra = state.extra as Map<String, dynamic>? ?? {};
+          return CreateBookingScreen(
+            entityType: 'stay',
+            entityId: state.pathParameters['id']!,
+            entityName: extra['name'] as String? ?? 'Stay',
+            entityImage: extra['image'] as String?,
+            pricePerUnit: (extra['price'] as num?)?.toDouble() ?? 0,
+          );
+        },
+      ),
+      GoRoute(
+        path: '${RouteNames.bookGuide}/:id',
+        name: 'bookGuide',
+        builder: (context, state) {
+          final extra = state.extra as Map<String, dynamic>? ?? {};
+          return CreateBookingScreen(
+            entityType: 'guide',
+            entityId: state.pathParameters['id']!,
+            entityName: extra['name'] as String? ?? 'Guide',
+            entityImage: extra['image'] as String?,
+            pricePerUnit: (extra['price'] as num?)?.toDouble() ?? 0,
+          );
+        },
       ),
       GoRoute(
         path: RouteNames.chat,
