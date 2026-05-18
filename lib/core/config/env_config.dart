@@ -15,6 +15,9 @@ abstract final class EnvConfig {
   static String get supabaseAnonKey =>
       dotenv.env['SUPABASE_ANON_KEY'] ?? '';
 
+  static String get geminiApiKey =>
+      dotenv.env['GEMINI_API_KEY'] ?? '';
+
   /// Call this in main() before using any config values.
   static Future<void> load() async {
     await dotenv.load(fileName: '.env');

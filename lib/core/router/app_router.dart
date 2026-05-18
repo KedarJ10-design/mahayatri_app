@@ -21,6 +21,9 @@ import '../../features/booking/ui/screens/bookings_screen.dart';
 import '../../features/booking/ui/screens/create_booking_screen.dart';
 import '../../features/profile/ui/screens/profile_screen.dart';
 import '../../features/profile/ui/screens/edit_profile_screen.dart';
+import '../../features/settings/ui/screens/settings_screen.dart';
+import '../../features/notifications/ui/screens/notifications_screen.dart';
+import '../../features/safety/ui/screens/safety_screen.dart';
 
 // Placeholder for screens not yet built
 class _PlaceholderScreen extends StatelessWidget {
@@ -204,19 +207,19 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         path: RouteNames.notifications,
         name: 'notifications',
         builder: (context, state) =>
-            const _PlaceholderScreen(title: 'Notifications'),
+            const NotificationsScreen(),
       ),
       GoRoute(
         path: RouteNames.settings,
         name: 'settings',
         builder: (context, state) =>
-            const _PlaceholderScreen(title: 'Settings'),
+            const SettingsScreen(),
       ),
       GoRoute(
         path: RouteNames.safety,
         name: 'safety',
         builder: (context, state) =>
-            const _PlaceholderScreen(title: 'Safety Center'),
+            const SafetyScreen(),
       ),
       GoRoute(
         path: RouteNames.editProfile,
